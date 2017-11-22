@@ -27,7 +27,7 @@ export class PatientService {
 
     localStorage.setItem('patients', JSON.stringify(objects));
     localStorage.setItem('patients_id', newId.toString());
-    return true;
+    return this.getAllObjects();
   }
 
   getObjectById(key) {
@@ -40,6 +40,6 @@ export class PatientService {
   }
 
   getAllObjects() {
-    return JSON.parse(localStorage.getItem('patients'));
+    return JSON.parse(localStorage.getItem('patients')) || [];
   }
 }
