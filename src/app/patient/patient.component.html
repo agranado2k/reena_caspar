@@ -11,10 +11,24 @@
   class="btn btn-primary save">Create Patient</button>
 </form>
 
-<ul class="group-list">
+<ul class="list-group">
   <li 
   *ngFor="let p of patients$ | async" 
-  class="group-list-item">
-    {{ p.name }}
+  class="list-group-item">
+    <div *ngIf="!fields[p.key] else editField;" (click)="toggleField(p)">{{ p.name }}</div>
+    <ng-template #editField>
+      <input 
+        required 
+        ngModel 
+        #name="ngModel" 
+        [(ngModel)]="p.name" 
+        (keyup.enter)="update(p)"
+        name="name" 
+        id="pname" 
+        type="text">
+    </ng-template>
+    <button 
+    (click)="delete(p)"
+    class="btn btn-danger">Delete</button>
   </li>
 </ul>

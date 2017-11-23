@@ -42,6 +42,26 @@ describe('PatientService', () => {
     expect(spy).toHaveBeenCalledWith(patient);
   }));
 
+  it('should remove a patient',
+    inject([PatientService], (service: PatientService) => {
+    let patient = {key: 1, name: 'patient'};
+    let spy = spyOn(service, 'removeObject');
+
+    service.remove(patient.key);
+
+    expect(spy).toHaveBeenCalledWith(patient.key);
+  }));
+
+  it('should update a patient',
+    inject([PatientService], (service: PatientService) => {
+    let patient = {key: 1, name: 'patient'};
+    let spy = spyOn(service, 'updateObject');
+
+    service.update(patient.key);
+
+    expect(spy).toHaveBeenCalledWith(patient.key);
+  }));
+
   it('should get all objects from localStorage',
     inject([PatientService], (service: PatientService) => {
     localStorage.setItem('patients', JSON.stringify([{key: 1}, {key: 2}, {key: 3}]));
@@ -80,5 +100,27 @@ describe('PatientService', () => {
 
     expect(result.length).toBe(1);
     expect(object.key).not.toBeNull();
+  }));
+
+  it('should remove a object from localStorage',
+    inject([PatientService], (service: PatientService) => {
+    localStorage.setItem('patients', JSON.stringify([{key: 1}, {key: 2}, {key: 3}]));
+    let patientKey = 2;
+
+    let objects = service.removeObject(patientKey);
+
+    expect(objects.length).toBe(2);
+    expect(objects[0].key).toBe(1);
+    expect(objects[1].key).toBe(3);
+  }));
+
+  it('should update a object from localStorage',
+    inject([PatientService], (service: PatientService) => {
+    localStorage.setItem('patients', JSON.stringify([{key: 1}, {key: 2}, {key: 3}]));
+    let updatedPatient = {key: 2, name: 'patient'};
+
+    let objects = service.updateObject(updatedPatient);
+
+    expect(objects[1].name).toContain('patient');
   }));
 });

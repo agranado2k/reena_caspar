@@ -8,6 +8,7 @@ import { PatientService } from '../patient.service';
 })
 export class PatientComponent implements OnInit {
   patients$;
+  fields: any[] = [];
 
   constructor(private patientService: PatientService) { }
 
@@ -18,5 +19,18 @@ export class PatientComponent implements OnInit {
   save(f) {
     this.patients$ = this.patientService.create(f.value);
     f.resetForm();
+  }
+
+  delete(patient) {
+    this.patients$ = this.patientService.remove(patient.key);
+  }
+
+  update(patient) {
+    this.toggleField(patient);
+    this.patientService.update(patient);
+  }
+
+  toggleField(patient) {
+    this.fields[patient.key] = !this.fields[patient.key];
   }
 }

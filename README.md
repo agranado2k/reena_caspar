@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/agranado2k/reena_caspar.svg?branch=master)](https://travis-ci.org/agranado2k/reena_caspar)
+
 The main goal is to create a very small Web application with CRUD user pages for:
   •	Clinic
   •	Therapist

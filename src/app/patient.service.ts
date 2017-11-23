@@ -18,6 +18,14 @@ export class PatientService {
     return Observable.from([this.createObject(patient)]);
   }
 
+  remove(key) {
+    return Observable.from([this.removeObject(key)]);
+  }
+
+  update(patient) {
+    return Observable.from([this.updateObject(patient)]);
+  }
+
   createObject(object) {
     let newId = (+localStorage.getItem('patients_id') || 0) + 1;
     object.key = newId;
@@ -28,6 +36,24 @@ export class PatientService {
     localStorage.setItem('patients', JSON.stringify(objects));
     localStorage.setItem('patients_id', newId.toString());
     return this.getAllObjects();
+  }
+
+  removeObject(key) {
+    let objects: any[] = this.getAllObjects();
+    let index = objects.findIndex(obj => obj.key === key);
+    objects.splice(index, 1);
+
+    localStorage.setItem('patients', JSON.stringify(objects));
+    return objects;
+  }
+
+  updateObject(object) {
+    let objects: any[] = this.getAllObjects();
+    let index = objects.findIndex(obj => obj.key === object.key);
+    objects[index] = object;
+
+    localStorage.setItem('patients', JSON.stringify(objects));
+    return objects;
   }
 
   getObjectById(key) {
